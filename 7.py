@@ -10,6 +10,9 @@ if img is None:
     print("Error: Image not found!")
     exit()
 
+# image shape
+print("Image Shape:", img.shape) # Image Shape: (1281, 1920, 3)
+
 # Get image dimensions
 height, width = img.shape[:2]
 
