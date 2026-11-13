@@ -2,10 +2,10 @@
 import cv2
 
 # load the face the face detection model
-face_cascade = cv2.CascadeClassifier(cv2.data.haarcascades + 'haarcascades_frontalface_default.xml')
+face_cascade = cv2.CascadeClassifier(cv2.data.haarcascades + 'haarcascade_frontalface_default.xml')
 
 # access the webcam
-cap = cv2.VideoCapture()
+cap = cv2.VideoCapture(0)
 
 while True:
     ret, frame = cap.read()
@@ -14,14 +14,14 @@ while True:
         print("Error: Can't access the camera")
         break
 
-    gray = cv2.cvColor(frame, cv2.COLOR_BGR2GRAY)
+    gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
 
     # detect the faces
     faces = face_cascade.detectMultiScale(gray, scaleFactor=1.1, minNeighbors=5, minSize=(30, 30))
 
     # draw rectangles
     for (x, y, w, h) in faces:
-        cv2.reactangle(frame, (x, y), (x + w, y + h), (0, 255, 0), 2)
+        cv2.rectangle(frame, (x, y), (x + w, y + h), (0, 255, 0), 2)
 
         # add label
         cv2.putText(frame, 'Face', (x, y-10), cv2.FONT_HERSHEY_SIMPLEX, 0.8, (0, 255, 0), 2)
@@ -33,9 +33,10 @@ while True:
     cv2.imshow("Realtime Face Detection", frame)
 
     # press 'q' to quit and exit
-    if cv2.waitkey(1) & 0xFF == ord('q'):
+    if cv2.waitKey(1) & 0xFF == ord('q'):
         break
 
 # release the webcam
 cap.release()
 cv2.destroyAllWindows()
+print("Camera closed successfully!")
